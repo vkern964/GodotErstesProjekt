@@ -29,10 +29,14 @@ func update_HUD():
 	if minutes < 10:
 		minutesString = "0" + String(minutes)
 		
-	$Control/HBoxContainer/Time.text = "  Uhrzeit: " + String(hour) + ":" +minutesString + " Uhr  "
+	$HBoxContainer/Time.text = "  Uhrzeit: " + String(hour) + ":" +minutesString + " Uhr  "
 	
 	## Tag:
-	$Control/HBoxContainer/Day.text = "Tag : " + String(day) + "  "
+	$HBoxContainer/Day.text = "  Tag : " + String(day) + "  "
+	
+	$HBoxContainer/Coins.text = "  Coins: " + String(get_parent().coins)
+	
+	$HBoxContainer/ReputationBar.value = get_parent().reputation
 	
 	
 	

@@ -21,11 +21,10 @@ onready var ground_ray = $GroundRay
 
 ## Inventar:
 var inv = [] ## Hier kommen die Nodes rein
+var coins = 0
+var reputation = 50
 
-
-var gametime = 300
-
-onready var world = get_parent()
+onready var world = find_parent("Welt")
 
 #variables
 var mouse_motion = Vector2()
