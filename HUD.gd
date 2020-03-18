@@ -32,7 +32,11 @@ func update_HUD():
 	$Control/HBoxContainer/Time.text = "  Uhrzeit: " + String(hour) + ":" +minutesString + " Uhr  "
 	
 	## Tag:
-	$Control/HBoxContainer/Day.text = "Tag : " + String(day) + "  "
+	$Control/HBoxContainer/Day.text = "  Tag : " + String(day) + "  "
+	
+	$Control/HBoxContainer/Coins.text = "  Coins: " + String(get_parent().coins)
+	
+	$Control/HBoxContainer/ReputationBar.value = get_parent().reputation
 	
 	
 	

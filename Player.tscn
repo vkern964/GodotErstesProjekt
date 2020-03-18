@@ -32,16 +32,19 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/Control"]
+margin_top = 30.0
 margin_right = 1025.0
-margin_bottom = 40.0
+margin_bottom = 75.0
 size_flags_horizontal = 3
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Time" type="Label" parent="HUD/Control/HBoxContainer"]
+margin_left = 248.0
 margin_top = 15.0
-margin_right = 118.0
+margin_right = 366.0
 margin_bottom = 29.0
 text = "Uhrzeit: 6:00 Uhr  "
 __meta__ = {
@@ -49,9 +52,9 @@ __meta__ = {
 }
 
 [node name="Day" type="Label" parent="HUD/Control/HBoxContainer"]
-margin_left = 122.0
+margin_left = 370.0
 margin_top = 15.0
-margin_right = 175.0
+margin_right = 423.0
 margin_bottom = 29.0
 size_flags_horizontal = 9
 text = "  Tag: 1  "
@@ -60,9 +63,9 @@ __meta__ = {
 }
 
 [node name="Coins" type="Label" parent="HUD/Control/HBoxContainer"]
-margin_left = 179.0
+margin_left = 427.0
 margin_top = 15.0
-margin_right = 262.0
+margin_right = 510.0
 margin_bottom = 29.0
 size_flags_horizontal = 9
 text = "  Münzen: 0  "
@@ -70,16 +73,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="HUD/Control/HBoxContainer"]
-margin_left = 266.0
+[node name="Reputation" type="Label" parent="HUD/Control/HBoxContainer"]
+margin_left = 514.0
 margin_top = 15.0
-margin_right = 334.0
+margin_right = 582.0
 margin_bottom = 29.0
 text = "  Ansehen:"
 
-[node name="TextureProgress" type="TextureProgress" parent="HUD/Control/HBoxContainer"]
-margin_left = 338.0
-margin_right = 528.0
+[node name="ReputationBar" type="TextureProgress" parent="HUD/Control/HBoxContainer"]
+margin_left = 586.0
+margin_right = 776.0
 margin_bottom = 45.0
 value = 10.0
 texture_under = ExtResource( 3 )
@@ -87,3 +90,9 @@ texture_progress = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ItemList" type="ItemList" parent="HUD/Control"]
+margin_right = 428.0
+margin_bottom = 154.0
+items = [ "", null, false, "", null, false, "", null, false, "", null, false, "", null, false ]
+max_columns = 5
