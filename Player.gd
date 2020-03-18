@@ -19,6 +19,10 @@ export var CHUNK_SIZE = 2
 onready var player_cam = $Camera
 onready var ground_ray = $GroundRay
 
+## Inventar:
+var inv = [] ## Hier kommen die Nodes rein
+
+
 var gametime = 300
 
 onready var world = get_parent()
@@ -93,3 +97,25 @@ func _axis():
 		
 		
 	return direction.normalized()
+
+## Inventory:
+func has_inventory_space():
+	if inv.size() > 5:
+		return false
+	else:
+		return true
+func remove_from_inventory(id):
+	for item in inv:
+		if item.id == id:
+			var index = inv.find_last(item)
+			inv.remove(index)
+			return true
+	return false
+func put_to_inventory(node):
+	if inv.size() < 5:
+		inv.append(node)
+		return true
+	return false
+
+func _process(delta):
+	$HUD.update_HUD()
