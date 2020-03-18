@@ -1,24 +1,89 @@
 extends KinematicBody
 
+const GRAVITY = 3
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-var velocity = Vector3(0,0,0)
+#mouse sensitivity
+export(float,0.1,1.0) var sensitivity_x = 0.5
+export(float,0.1,1.0) var sensitivity_y = 0.4
 
-# Called when the node enters the scene tree for the first time.
+#physics
+export(float,10.0, 30.0) var speed = 5.0
+export(float,10.0, 50.0) var jump_height = 5
+export(float,1.0, 10.0) var mass = 4.0
+export(float,0.1, 3.0, 0.1) var gravity_scl = 1.0
+
+
+export var CHUNK_SIZE = 2
+
+#instances ref
+onready var player_cam = $Camera
+onready var ground_ray = $GroundRay
+
+var gametime = 300
+
+onready var world = get_parent()
+
+#variables
+var mouse_motion = Vector2()
+var gravity_speed = 0
+
 func _ready():
-	pass # Replace with function body.
+	var save_path = "res://Highscore.cfg"
+	var config = ConfigFile.new()
+	var response = config.load(save_path)
+	var highscore_number = config.get_value("Highscore", "highscore", 0)
 
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	ground_ray.enabled = true
+	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 func _physics_process(delta):
-	velocity += Vector3(0,-9.8*delta,0)
-	if Input.is_action_just_pressed("ui_select"):
-		velocity += Vector3(0, 5, 0)
-
-	move_and_slide(velocity)
 	
+	#camera and body rotation
+	rotate_y(deg2rad(20)* - mouse_motion.x * sensitivity_x * delta)
+	player_cam.rotate_x(deg2rad(20) * - mouse_motion.y * sensitivity_y * delta)
+	player_cam.rotation.x = clamp(player_cam.rotation.x, deg2rad(-80), deg2rad(47))
+	mouse_motion = Vector2()
+	
+	#gravity
+	gravity_speed -= GRAVITY * gravity_scl * mass * delta
+	
+	#character moviment
+	var velocity = Vector3()
+	velocity = _axis() * speed
+	velocity.y = gravity_speed
+	
+	#jump
+	if Input.is_action_just_pressed("ui_select") and ground_ray.is_colliding():
+		print("Space")
+		velocity.y = jump_height
+	
+	gravity_speed = move_and_slide(velocity).y
+	
+	pass
+
+
+func _input(event):
+	
+	if event is InputEventMouseMotion:
+		mouse_motion = event.relative
+
+
+func _axis():
+	var direction = Vector3()
+	
+	if Input.is_key_pressed(KEY_W):
+		direction -= get_global_transform().basis.z.normalized()
+		
+	if Input.is_key_pressed(KEY_S):
+		direction += get_global_transform().basis.z.normalized()
+		
+	if Input.is_key_pressed(KEY_A):
+		direction -= get_global_transform().basis.x.normalized()
+		
+	if Input.is_key_pressed(KEY_D):
+		direction += get_global_transform().basis.x.normalized()
+		
+		
+	return direction.normalized()

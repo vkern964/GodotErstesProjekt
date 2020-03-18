@@ -11,3 +11,5 @@ shape = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 0, 1.79738, 0 )
+
+[node name="GroundRay" type="RayCast" parent="."]
