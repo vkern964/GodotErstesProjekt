@@ -28,6 +28,10 @@ var mouse_motion = Vector2()
 var gravity_speed = 0
 
 func _ready():
+	var screen_size = OS.get_screen_size(0)
+	var window_size = OS.get_window_size()
+	OS.set_window_position(screen_size*0.5 - window_size*0.5)
+	
 	var save_path = "res://Highscore.cfg"
 	var config = ConfigFile.new()
 	var response = config.load(save_path)
@@ -53,6 +57,8 @@ func _physics_process(delta):
 	var velocity = Vector3()
 	velocity = _axis() * speed
 	velocity.y = gravity_speed
+	if ground_ray.is_colliding():
+		print(ground_ray.get_collider().name)
 	
 	#jump
 	if Input.is_action_just_pressed("ui_select") and ground_ray.is_colliding():
