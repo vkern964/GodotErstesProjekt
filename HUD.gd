@@ -15,6 +15,8 @@ func _ready():
 #func _process(delta):
 #	pass
 
+onready var player = get_parent()
+
 var day
 var time 
 
@@ -38,5 +40,32 @@ func update_HUD():
 	
 	$HBoxContainer/ReputationBar.value = get_parent().reputation
 	
+	if player.currentItem != null:
+		$ItemPick.text = "Press 'E' to pick up " + player.currentItemDescription
+		$ItemPick.visible = true
+	else:
+		$ItemPick.visible = false
 	
 	
+	
+func display_message(message):
+	$Message/RichTextLabel.text = message
+	$Message.visible = true
+	get_tree().paused = true
+
+
+func _on_Ok_pressed():
+	$Message.visible = false
+	get_tree().paused = false
+	pass # Replace with function body.
+
+func display_quest_offer(message):
+	pass
+
+
+func _on_CancelQuest_pressed():
+	pass # Replace with function body.
+
+
+func _on_AcceptQuest_pressed():
+	pass # Replace with function body.

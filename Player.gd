@@ -24,6 +24,13 @@ var inv = [] ## Hier kommen die Nodes rein
 var coins = 0
 var reputation = 50
 
+var currentItem 
+var currentItemDescription
+
+var active_quests = [] # Hier werden die Aktiven Quests abgespeichert
+
+
+
 onready var world = find_parent("Welt")
 
 #variables
@@ -60,8 +67,6 @@ func _physics_process(delta):
 	var velocity = Vector3()
 	velocity = _axis() * speed
 	velocity.y = gravity_speed
-	if ground_ray.is_colliding():
-		print(ground_ray.get_collider().name)
 	
 	#jump
 	if Input.is_action_just_pressed("ui_select") and ground_ray.is_colliding():
@@ -98,11 +103,15 @@ func _axis():
 	return direction.normalized()
 
 ## Inventory:
-func has_inventory_space():
-	if inv.size() > 5:
-		return false
-	else:
+func has_inventory_space(item):
+	if inv.size() < 5:
 		return true
+	else:
+		for inv_item in inv:
+			if inv_item.id == item.id:
+				return true
+		return false
+			
 func remove_from_inventory(id):
 	for item in inv:
 		if item.id == id:
@@ -110,11 +119,49 @@ func remove_from_inventory(id):
 			inv.remove(index)
 			return true
 	return false
-func put_to_inventory(node):
+func put_to_inventory(item):
 	if inv.size() < 5:
-		inv.append(node)
+		inv.append(item)
 		return true
 	return false
 
+func has_in_inventory(item):
+	for inv_item in inv:
+		if inv_item.id == item.id and inv_item.amount >= item.amount:
+			return true
+	return false
+
+
 func _process(delta):
 	$HUD.update_HUD()
+	
+	if Input.is_action_just_pressed("pick_item"):
+		pick_item()
+
+func display_message(string):
+	$HUD.display_message(string)
+
+func display_quest_offer(string):
+	$HUD.display_quest_offer(string)
+
+func _on_CollisionDetection_area_entered(area):
+	if area.owner.is_in_group("Item"):
+		var item = area.owner
+		currentItem = item
+		currentItemDescription = item.description
+		print (item.description)
+	pass # Replace with function body.
+
+
+func _on_CollisionDetection_area_exited(area):
+	if area.owner == currentItem:
+		currentItem = null
+
+func pick_item():
+	if currentItem == null: return
+	if has_inventory_space(currentItem):
+		put_to_inventory(currentItem)
+		currentItem.queue_free()
+		currentItem = null
+	else:
+		display_message("Deine Inventory Slots sind alle belegt!")

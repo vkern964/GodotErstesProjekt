@@ -1,13 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://GodotErstesProjekt/Player.gd" type="Script" id=1]
 [ext_resource path="res://GodotErstesProjekt/HUD.gd" type="Script" id=2]
 [ext_resource path="res://GodotErstesProjekt/Ressources/Textures/grey_button02.png" type="Texture" id=3]
 [ext_resource path="res://GodotErstesProjekt/Ressources/Textures/blue_button02.png" type="Texture" id=4]
 [ext_resource path="res://GodotErstesProjekt/Ressources/Textures/dummy_item.png" type="Texture" id=5]
+[ext_resource path="res://GodotErstesProjekt/Ressources/Textures/Message.png" type="Texture" id=6]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.64719
+
+[sub_resource type="BoxShape" id=2]
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -23,6 +26,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79738, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.387587, 0 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
+pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
@@ -126,3 +130,125 @@ margin_left = 272.0
 margin_right = 336.0
 margin_bottom = 64.0
 texture = ExtResource( 5 )
+
+[node name="Message" type="TextureRect" parent="HUD"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -600.0
+margin_top = -200.0
+margin_right = 600.0
+margin_bottom = 200.0
+texture = ExtResource( 6 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HUD/Message"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -500.0
+margin_top = -150.0
+margin_right = 500.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 1000, 200 )
+text = "Dies ist ein Beispiel Text!"
+
+[node name="Ok" type="Button" parent="HUD/Message"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = 128.127
+margin_right = 200.0
+margin_bottom = 168.127
+rect_min_size = Vector2( 400, 40 )
+text = "Ok"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quest Offer" type="TextureRect" parent="HUD"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -600.0
+margin_top = -200.0
+margin_right = 600.0
+margin_bottom = 200.0
+texture = ExtResource( 6 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HUD/Quest Offer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -500.0
+margin_top = -150.0
+margin_right = 500.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 1000, 200 )
+text = "Quest Frage"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancel" type="Button" parent="HUD/Quest Offer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -332.964
+margin_top = 128.127
+margin_right = -32.9641
+margin_bottom = 168.127
+rect_min_size = Vector2( 300, 40 )
+text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Accept" type="Button" parent="HUD/Quest Offer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 32.0
+margin_top = 128.127
+margin_right = 332.0
+margin_bottom = 168.127
+rect_min_size = Vector2( 300, 40 )
+text = "Accept"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemPick" type="Label" parent="HUD"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Drücke 'E', um  aufzuheben"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CollisionDetection" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="CollisionDetection"]
+shape = SubResource( 2 )
+[connection signal="pressed" from="HUD/Message/Ok" to="HUD" method="_on_Ok_pressed"]
+[connection signal="pressed" from="HUD/Quest Offer/Cancel" to="HUD" method="_on_CancelQuest_pressed"]
+[connection signal="pressed" from="HUD/Quest Offer/Accept" to="HUD" method="_on_AcceptQuest_pressed"]
+[connection signal="area_entered" from="CollisionDetection" to="." method="_on_CollisionDetection_area_entered"]
+[connection signal="area_exited" from="CollisionDetection" to="." method="_on_CollisionDetection_area_exited"]

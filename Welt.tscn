@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://GodotErstesProjekt/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://GodotErstesProjekt/quest.gd" type="Script" id=2]
+[ext_resource path="res://GodotErstesProjekt/Welt.gd" type="Script" id=2]
+[ext_resource path="res://GodotErstesProjekt/Item.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 20, 1, 20 )
@@ -10,6 +11,7 @@ size = Vector3( 20, 1, 20 )
 extents = Vector3( 20, 1, 20 )
 
 [node name="Welt" type="Spatial"]
+script = ExtResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
 
@@ -25,5 +27,5 @@ shape = SubResource( 2 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.816464, 1.76017, -0.982145 )
 
-[node name="Node" type="Node" parent="."]
-script = ExtResource( 2 )
+[node name="Item" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.94058, 3.03915, 8.09578 )
