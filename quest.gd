@@ -28,12 +28,13 @@ func _ready():
 
 #hier evtl noch überprüfen, ob reputation reicht und 
 func can_do_quest():
-	if quest_day == world.day:
-		amount_of_delay = 0
+	var delay
+	if quest_day+amount_of_delay == world.day:
+		delay = 0
 	else :
-		amount_of_delay = 1
+		delay = 1
 
-	if amount_of_delay == 0:
+	if delay == 0:
 		return 1
 	if player.reputation < currentNPC.reputationBarrierNPC:
 		return 2
@@ -52,7 +53,7 @@ func is_quest_done():
 				return false
 		return true
 	if mode == 2:
-		if referencedNPC.quest_inv.has(required_item_ID):
+		if null != referencedNPC.get_required_item(required_item):
 			return true
 		return false
 	pass
