@@ -12,9 +12,18 @@ func _ready():
 
 
 var day = 1
-var time = 6.00 # Steht in diesem Fall für 6 Uhr Morgens, kannst das Format aber auch gerne ändern ich pass mich Dir da an.
+var hour = 6
+var minute = 0
+ # Steht in diesem Fall für 6 Uhr Morgens, kannst das Format aber auch gerne ändern ich pass mich Dir da an.
+var timetimeduration = 4
+#var 
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+var timetimer = 0
+func _process(delta):
+	timetimer += delta
+	if timetimer > timetimeduration:
+		minute += 10
+		if minute==60:
+			minute = 0
+			hour += 1
+		timetimer -= timetimeduration 
