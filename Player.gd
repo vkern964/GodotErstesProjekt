@@ -112,18 +112,28 @@ func has_inventory_space(item):
 				return true
 		return false
 			
-func remove_from_inventory(id):
-	for item in inv:
-		if item.id == id:
-			var index = inv.find_last(item)
-			inv.remove(index)
+func remove_from_inventory(item):
+	if not has_in_inventory(item): return false
+	for inv_item in inv:
+		if inv_item.id == item.id:
+			inv_item.amount -= item.amount
+			if inv_item.amount <= 0:
+				inv.erase(inv_item)
 			return true
 	return false
+
 func put_to_inventory(item):
-	if inv.size() < 5:
-		inv.append(item)
-		return true
-	return false
+	if not has_inventory_space(item):
+		return false
+	for inv_item in inv:
+		if inv_item.id == item.id:
+			inv_item.amount += item.amount
+			return true
+	var newitem = item.duplicate()
+	newitem.visible = false
+	inv.append(newitem)
+	item.queue_free()
+	
 
 func has_in_inventory(item):
 	for inv_item in inv:
@@ -165,3 +175,7 @@ func pick_item():
 		currentItem = null
 	else:
 		display_message("Deine Inventory Slots sind alle belegt!")
+		
+func handle_quest_player_decision(answer): ## FUnction called when player clicks on accept or cancel, at a quest offer
+	pass
+	

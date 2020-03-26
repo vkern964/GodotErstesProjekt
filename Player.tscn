@@ -89,7 +89,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HUD"]
+[node name="Inventory" type="HBoxContainer" parent="HUD"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -102,34 +102,139 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="HUD/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="HUD/Inventory"]
 margin_right = 64.0
 margin_bottom = 64.0
 texture = ExtResource( 5 )
 
-[node name="TextureRect2" type="TextureRect" parent="HUD/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="HUD/Inventory/TextureRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/Inventory/TextureRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -30.0
+margin_top = -16.0
+margin_right = -4.0
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="HUD/Inventory"]
 margin_left = 68.0
 margin_right = 132.0
 margin_bottom = 64.0
 texture = ExtResource( 5 )
 
-[node name="TextureRect3" type="TextureRect" parent="HUD/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="HUD/Inventory/TextureRect2"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/Inventory/TextureRect2"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -30.0
+margin_top = -16.0
+margin_right = -4.0
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="HUD/Inventory"]
 margin_left = 136.0
 margin_right = 200.0
 margin_bottom = 64.0
 texture = ExtResource( 5 )
 
-[node name="TextureRect4" type="TextureRect" parent="HUD/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="HUD/Inventory/TextureRect3"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/Inventory/TextureRect3"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -30.0
+margin_top = -16.0
+margin_right = -4.0
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect4" type="TextureRect" parent="HUD/Inventory"]
 margin_left = 204.0
 margin_right = 268.0
 margin_bottom = 64.0
 texture = ExtResource( 5 )
 
-[node name="TextureRect5" type="TextureRect" parent="HUD/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="HUD/Inventory/TextureRect4"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/Inventory/TextureRect4"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -30.0
+margin_top = -16.0
+margin_right = -4.0
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect5" type="TextureRect" parent="HUD/Inventory"]
 margin_left = 272.0
 margin_right = 336.0
 margin_bottom = 64.0
 texture = ExtResource( 5 )
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Inventory/TextureRect5"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/Inventory/TextureRect5"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -30.0
+margin_top = -16.0
+margin_right = -4.0
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Message" type="TextureRect" parent="HUD"]
 visible = false
