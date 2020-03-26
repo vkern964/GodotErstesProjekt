@@ -63,9 +63,9 @@ func display_quest_offer(message):
 	pass
 
 
-func _on_CancelQuest_pressed():
+func _on_CancelQuest_pressed(): #TODO
 	pass # Replace with function body.
 
 
-func _on_AcceptQuest_pressed():
+func _on_AcceptQuest_pressed(): #TODO
 	pass # Replace with function body.
