@@ -27,14 +27,7 @@ shape = SubResource( 2 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.816464, 1.76017, -0.982145 )
 
-<<<<<<< Updated upstream
-[node name="Quest" type="Node" parent="."]
-script = ExtResource( 2 )
-
-[node name="DefinedItems" type="Spatial" parent="."]
-=======
 [node name="Item" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45578, 0.443452, -4.86288 )
 amount = 4
 iconpath = "res://GodotErstesProjekt/Ressources/Textures/blue_button02.png"
->>>>>>> Stashed changes

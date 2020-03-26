@@ -177,5 +177,8 @@ func pick_item():
 		display_message("Deine Inventory Slots sind alle belegt!")
 		
 func handle_quest_player_decision(answer): ## FUnction called when player clicks on accept or cancel, at a quest offer
-	pass
+	pass#
+	
+func sleep():
+	
 	
