@@ -29,7 +29,7 @@ var currentItemDescription
 
 var active_quests = [] # Hier werden die Aktiven Quests abgespeichert
 
-
+var startTransform
 
 onready var world = find_parent("Welt")
 
@@ -38,6 +38,7 @@ var mouse_motion = Vector2()
 var gravity_speed = 0
 
 func _ready():
+	startTransform = self.transform
 	var screen_size = OS.get_screen_size(0)
 	var window_size = OS.get_window_size()
 	OS.set_window_position(screen_size*0.5 - window_size*0.5)
@@ -168,7 +169,9 @@ func _on_CollisionDetection_area_exited(area):
 		currentItem = null
 
 func pick_item():
-	if currentItem == null: return
+	if currentItem == null: 
+		sleep()
+		return
 	if has_inventory_space(currentItem):
 		put_to_inventory(currentItem)
 		currentItem.queue_free()
@@ -179,6 +182,12 @@ func pick_item():
 func handle_quest_player_decision(answer): ## FUnction called when player clicks on accept or cancel, at a quest offer
 	pass#
 	
+	
+# Schlafen:
 func sleep():
+	$HUD/AnimationPlayer.play("sleep")
 	
-	
+func setPlayerToSleepPosition():
+	self.transform = startTransform
+
+
