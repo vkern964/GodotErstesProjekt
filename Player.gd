@@ -37,6 +37,8 @@ onready var world = find_parent("Welt")
 var mouse_motion = Vector2()
 var gravity_speed = 0
 
+var currentNPC
+
 func _ready():
 	startTransform = self.transform
 	var screen_size = OS.get_screen_size(0)
@@ -147,7 +149,8 @@ func _process(delta):
 	$HUD.update_HUD()
 	
 	if Input.is_action_just_pressed("pick_item"):
-		pick_item()
+		do_action()
+
 
 func display_message(string):
 	$HUD.display_message(string)
@@ -161,12 +164,16 @@ func _on_CollisionDetection_area_entered(area):
 		currentItem = item
 		currentItemDescription = item.description
 		print (item.description)
+	elif area.owner.is_in_group("NPC"):
+		currentNPC = area.owner 
 	pass # Replace with function body.
 
 
 func _on_CollisionDetection_area_exited(area):
 	if area.owner == currentItem:
 		currentItem = null
+	if area.owner == currentNPC:
+		currentNPC = null
 
 func pick_item():
 	if currentItem == null: 
@@ -191,3 +198,16 @@ func setPlayerToSleepPosition():
 	self.transform = startTransform
 
 
+
+func do_action():
+	if currentNPC != null:
+		talk_to_NPC()
+	elif currentItem != null:
+		pick_item()
+
+func talk_to_NPC():
+	if reputation < currentNPC.reputationBarrier:
+		display_message(currentNPC.sentence_not_enough_reputation)
+	else:
+		var index = int(rand_range(0,currentNPC.standartSentences.size()))
+		display_message(currentNPC.standartSentences[index])

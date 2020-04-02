@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://GodotErstesProjekt/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GodotErstesProjekt/Item.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GodotErstesProjekt/Welt.gd" type="Script" id=3]
+[ext_resource path="res://GodotErstesProjekt/NPC.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 20, 1, 20 )
@@ -31,3 +32,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.816464, 1.76017, -0.982145 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45578, 0.443452, -4.86288 )
 amount = 4
 iconpath = "res://GodotErstesProjekt/Ressources/Textures/blue_button02.png"
+
+[node name="NPCs" type="Spatial" parent="."]
+
+[node name="Karl" parent="NPCs" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.18061, 0.443452, -1.37815 )
+standartSentences = [ "Hihi", "TestTest" ]
+reputationBarrier = 40
+sentence_not_enough_reputation = "Mit solchem Abschaum wie Dir rede ich nicht!"

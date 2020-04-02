@@ -41,11 +41,14 @@ func update_HUD():
 	
 	$HBoxContainer/ReputationBar.value = get_parent().reputation
 	
-	if player.currentItem != null:
-		$ItemPick.text = "Press 'E' to pick up " + player.currentItemDescription
-		$ItemPick.visible = true
+	if player.currentNPC != null:
+		$PressE.text = "Drücke 'E' um mit " + player.currentNPC.name + " zu sprechen."
+		$PressE.visible = true
+	elif player.currentItem != null:
+		$PressE.text = "Drücke 'E' um " + player.currentItemDescription + " auszuheben"
+		$PressE.visible = true
 	else:
-		$ItemPick.visible = false
+		$PressE.visible = false
 	
 	
 	
@@ -57,8 +60,8 @@ func display_message(message):
 
 
 func _on_Ok_pressed():
-	$Message.visible = false
 	get_tree().paused = false
+	$Message.visible = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	pass # Replace with function body.
 
