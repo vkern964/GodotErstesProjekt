@@ -1,19 +1,7 @@
 extends CanvasLayer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 onready var player = get_parent()
 
@@ -49,12 +37,18 @@ func update_HUD():
 		$PressE.visible = true
 	else:
 		$PressE.visible = false
-	
-	
-	
+
 func display_message(message):
 	$Message/RichTextLabel.text = message
 	$Message.visible = true
+	$Message/AskQuest.hide()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().paused = true
+	
+func display_npc_message(message):
+	$Message/RichTextLabel.text = message
+	$Message.visible = true
+	$Message/AskQuest.show()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	get_tree().paused = true
 
@@ -68,22 +62,27 @@ func _on_Ok_pressed():
 
 ## Quest Offer 
 func display_quest_offer(message):
-	$"Quest Offer/RichTextLabel".text = message
-	$"Quest Offer".visible = true
+	$"QuestOffer/RichTextLabel".text = message
+	$"QuestOffer".show()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	get_tree().paused = true
 	pass
 
 
 func _on_CancelQuest_pressed(): 
-	player.handle_quest_player_decision(false)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	var quest = player.currentNPC.get_node("Quest")
+	$QuestOffer.hide()
+	player.display_message(quest.questCancelMessage)
 	pass # Replace with function body.
 
 
 func _on_AcceptQuest_pressed(): 
-	player.handle_quest_player_decision(true)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	var quest = player.currentNPC.get_node("Quest")
+	$QuestOffer.hide()
+	quest.initiate()
+	if quest.itemAtBeginning != null:
+		player.put_to_inventory(get_node(quest.itemAtBeginning))
+	player.new_quest()
+	player.display_message(quest.questAcceptMessage)
 	pass # Replace with function body.
 
 func update_inventory():
@@ -98,3 +97,6 @@ func update_inventory():
 		images[index].get_node("TextureRect").texture = null
 		images[index].get_node("Label").text = ""
 		index += 1
+
+func update_quest():
+	pass

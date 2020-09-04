@@ -1,15 +1,25 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://GodotErstesProjekt/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GodotErstesProjekt/Item.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GodotErstesProjekt/Welt.gd" type="Script" id=3]
 [ext_resource path="res://GodotErstesProjekt/NPC.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GodotErstesProjekt/Quest.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GodotErstesProjekt/Gegenstandsspawner.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 20, 1, 20 )
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.0666667, 0.45098, 0, 1 )
+
+[sub_resource type="BoxShape" id=3]
 extents = Vector3( 20, 1, 20 )
+
+[sub_resource type="CylinderMesh" id=4]
+height = 0.5
+
+[sub_resource type="CubeMesh" id=5]
 
 [node name="Welt" type="Spatial"]
 script = ExtResource( 3 )
@@ -19,19 +29,14 @@ script = ExtResource( 3 )
 [node name="Boden" type="MeshInstance" parent="StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16702, -0.256548, -0.193025 )
 mesh = SubResource( 1 )
-material/0 = null
+material/0 = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.463376, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.816464, 1.76017, -0.982145 )
-
-[node name="Item" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45578, 0.443452, -4.86288 )
-amount = 4
-iconpath = "res://GodotErstesProjekt/Ressources/Textures/blue_button02.png"
 
 [node name="NPCs" type="Spatial" parent="."]
 
@@ -39,4 +44,44 @@ iconpath = "res://GodotErstesProjekt/Ressources/Textures/blue_button02.png"
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.18061, 0.443452, -1.37815 )
 standartSentences = [ "Hihi", "TestTest" ]
 reputationBarrier = 40
-sentence_not_enough_reputation = "Mit solchem Abschaum wie Dir rede ich nicht!"
+
+[node name="Quest" parent="NPCs/Karl" instance=ExtResource( 5 )]
+reputationBonus = 10
+revenue = 100
+referencedNPC = NodePath("../../Richard")
+objectSpawners = [ NodePath("../../Richard/SpawnerMüll1") ]
+assigned_item = NodePath("../../../Items/Zeitung")
+sentenceNotEnoughReputation = "Ich mag dich nicht! Du hast nicht genug Ansehen."
+questOffer = "Mach den Dreck weg du Dreck"
+questAcceptMessage = "Ja dann los an die Arbeit!"
+questCancelMessage = "Ja dann mach ichs halt selber Du Idiot"
+questNotAtThisDay = "Gibt kein Dreck"
+questDone = "Klasse, alles ist wieder sauber Du Depp."
+
+[node name="Richard" parent="NPCs" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0671048, 0.443452, -8.5735 )
+standartSentences = [ "Hihi", "TestTest" ]
+reputationBarrier = 40
+
+[node name="SpawnerMüll1" parent="NPCs/Richard" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.18061, -0.275868, 1.37815 )
+itemPath = NodePath("../../../Items/Zeitung")
+
+[node name="Spawner" type="Spatial" parent="."]
+
+[node name="Items" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0 )
+
+[node name="Müll" parent="Items" instance=ExtResource( 2 )]
+amount = 0
+description = "Müll"
+id = 1
+iconpath = "res://GodotErstesProjekt/Ressources/Textures/dummy_item.png"
+mesh = SubResource( 4 )
+
+[node name="Zeitung" parent="Items" instance=ExtResource( 2 )]
+amount = 1
+description = "description"
+id = 1
+iconpath = "res://GodotErstesProjekt/Ressources/Textures/dummy_item.png"
+mesh = SubResource( 5 )

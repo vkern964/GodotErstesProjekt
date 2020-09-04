@@ -10,7 +10,7 @@ extends Spatial
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if mesh != null:
-		$Area/MeshInstance.mesh = mesh
+		$MeshInstance.mesh = mesh
 	pass # Replace with function body.
 
 

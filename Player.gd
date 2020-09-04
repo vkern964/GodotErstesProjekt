@@ -126,15 +126,18 @@ func remove_from_inventory(item):
 	return false
 
 func put_to_inventory(item):
-	if not has_inventory_space(item):
-		return false
-	for inv_item in inv:
-		if inv_item.id == item.id:
-			inv_item.amount += item.amount
-			return true
-	var newitem = item.duplicate()
-	newitem.visible = false
-	inv.append(newitem)
+	print(item.name)
+	print(item.amount)
+	if item.amount != 0:
+		if not has_inventory_space(item):
+			return false
+		for inv_item in inv:
+			if inv_item.id == item.id:
+				inv_item.amount += item.amount
+				return true
+		var newitem = item.duplicate()
+		newitem.visible = false
+		inv.append(newitem)
 	item.queue_free()
 	
 
@@ -155,17 +158,22 @@ func _process(delta):
 func display_message(string):
 	$HUD.display_message(string)
 
+func display_npc_message(string):
+	$HUD.display_npc_message(string)
+
 func display_quest_offer(string):
 	$HUD.display_quest_offer(string)
 
 func _on_CollisionDetection_area_entered(area):
-	if area.owner.is_in_group("Item"):
-		var item = area.owner
+	print("AREA")
+	if area.is_in_group("Item"):
+		var item = area
 		currentItem = item
 		currentItemDescription = item.description
 		print (item.description)
 	elif area.owner.is_in_group("NPC"):
 		currentNPC = area.owner 
+	print("NOTHING")
 	pass # Replace with function body.
 
 
@@ -186,9 +194,6 @@ func pick_item():
 	else:
 		display_message("Deine Inventory Slots sind alle belegt!")
 		
-func handle_quest_player_decision(answer): ## FUnction called when player clicks on accept or cancel, at a quest offer
-	pass#
-	
 	
 # Schlafen:
 func sleep():
@@ -205,9 +210,61 @@ func do_action():
 	elif currentItem != null:
 		pick_item()
 
-func talk_to_NPC():
+func talk_to_NPC():  ## Hier wird die Quest gehändelt
+	var quest = check_active_quest_at_current_npc()
+	if quest != null:
+		print("QUEST != NULL")
+		if quest.is_quest_done():
+			if quest.mode == 0:
+				remove_from_inventory(quest.get_node(quest.assigned_item))
+			if quest.itemAtEnd != null:
+				put_to_inventory(quest.get_node(quest.itemAtEnd))
+			coins += quest.revenue
+			reputation += quest.reputationBonus
+			display_message(quest.questDone)
+			active_quests.erase(quest)
+			return
+		else:
+			if not check_at_npc_for_recieving_item_from_quest():
+				display_message(quest.questNotRequiredItems)
+			display_message("Du hast deine Aufgabe noch nicht erledigt, spreche mit mir, wenn Du meine Aufgabe erledigt hast!")
+			return
 	if reputation < currentNPC.reputationBarrier:
-		display_message(currentNPC.sentence_not_enough_reputation)
+		display_message(currentNPC.sentenceNotEnoughReputation)
 	else:
 		var index = int(rand_range(0,currentNPC.standartSentences.size()))
-		display_message(currentNPC.standartSentences[index])
+		display_npc_message(currentNPC.standartSentences[index])
+
+
+func _on_AskQuest_pressed():
+	var quest = currentNPC.get_node("Quest")
+	$HUD/Message.hide()
+	if quest.can_do_quest() == 0:
+		display_quest_offer(quest.questOffer)
+	elif quest.can_do_quest() == 1:
+		display_message(quest.questNotAtThisDay)
+
+func new_quest():
+	active_quests.append(currentNPC.get_node("Quest"))
+
+func check_active_quest_at_current_npc():
+	for quest in active_quests:
+		print(quest.get_node(quest.referencedNPC).name) 
+		print(currentNPC.name)
+		if quest.get_node(quest.referencedNPC).name == currentNPC.name:
+			return quest
+	return null
+		
+func check_at_npc_for_recieving_item_from_quest():
+	for quest in active_quests:
+		if quest.referencedNPC != currentNPC.name:
+			print("Bei diesen NPC kann man Items abgeben")
+			if has_in_inventory(quest.requiredItems):
+				print("Es sind auch alle Items dafür da")
+				return true
+	return false
+
+## TODO
+## Wie geht es Weiter? 
+# Quest system checken, wenn man einem anderen npc was bringen soll
+

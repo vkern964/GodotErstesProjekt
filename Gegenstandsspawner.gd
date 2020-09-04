@@ -5,28 +5,29 @@ extends Spatial
 # var a = 2
 # var b = "text"
 export (float) var wahrscheinlichkeit
-export (int) var item_ID
+export (NodePath) var itemPath
 var child_object
 
 onready var world = find_parent("Welt")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$MeshInstance.hide()
 	pass # Replace with function body.
 
 func force_spawn():
-	if child_object != null:
-		return
-	var items = world.get_node("/DefinedItems")
-	for item in items.get_children():
-		if item.id == item_ID:
-			child_object = item.duplicate(true)
-			self.add_child(child_object)
-			child_object.transform = Vector3(0,0,0)
-			return
-	print("item not found!")
-	pass
-	
+	print("Spawning Item...")
+	child_object = get_node(itemPath).duplicate(true)
+	child_object.add_to_group("Item")
+	child_object.set_script(load("res://GodotErstesProjekt/Item.gd"))
+	child_object.description = get_node(itemPath).description
+	child_object.id = get_node(itemPath).id
+	child_object.amount = get_node(itemPath).amount
+	self.add_child(child_object) 
+	child_object.owner = owner
+	child_object.translation = Vector3(0,0,0)
+	print(child_object.amount)
+
 func daily_spawn():
 	var number = rand_range(0,1)
 	if wahrscheinlichkeit > 1 || wahrscheinlichkeit < 0:
@@ -37,12 +38,15 @@ func daily_spawn():
 	pass
 	
 func check_attached_item():
-	if self.get_children().size() == 0:
+	if self.get_children().size() == 1:
 		child_object = null
-	child_object = get_children()[0]
+		return
+	else:
+		child_object = get_children()[1]
 	pass
 	
 func is_spawner_empty():
+	check_attached_item()
 	if child_object == null:
 		return true
 	return false
