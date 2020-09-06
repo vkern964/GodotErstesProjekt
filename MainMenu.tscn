@@ -1,0 +1,163 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GodotErstesProjekt/MainMenu.gd" type="Script" id=1]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -70.0
+margin_top = -80.0
+margin_right = 70.0
+margin_bottom = -66.0
+text = "Krasses Spiel!!!!111elf"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -210.0
+margin_top = -260.0
+margin_right = 210.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 420, 520 )
+color = Color( 0, 0, 0, 0.658824 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -71.5
+margin_top = -46.0
+margin_right = 71.5
+margin_bottom = 46.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NeuesSpiel" type="Button" parent="Main"]
+margin_right = 143.0
+margin_bottom = 20.0
+text = "Neues Spiel beginen"
+
+[node name="Spiel Laden" type="Button" parent="Main"]
+margin_top = 24.0
+margin_right = 143.0
+margin_bottom = 44.0
+text = "Spiel Laden"
+
+[node name="Einstellungen" type="Button" parent="Main"]
+margin_top = 48.0
+margin_right = 143.0
+margin_bottom = 68.0
+text = "Einstellungen"
+
+[node name="SpielBeenden" type="Button" parent="Main"]
+margin_top = 72.0
+margin_right = 143.0
+margin_bottom = 92.0
+text = "Spiel Beenden"
+
+[node name="Load" type="VBoxContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -250.0
+margin_right = 200.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 400, 500 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="Load"]
+margin_right = 400.0
+margin_bottom = 476.0
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Load"]
+margin_top = 480.0
+margin_right = 400.0
+margin_bottom = 500.0
+
+[node name="Back" type="Button" parent="Load/HBoxContainer"]
+margin_right = 198.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Zurück"
+
+[node name="Load" type="Button" parent="Load/HBoxContainer"]
+margin_left = 202.0
+margin_right = 400.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Laden"
+
+[node name="Settings" type="VBoxContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -250.0
+margin_right = 200.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 400, 500 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings"]
+margin_right = 400.0
+margin_bottom = 476.0
+size_flags_vertical = 3
+
+[node name="Fullscreen" type="CheckBox" parent="Settings/VBoxContainer"]
+margin_right = 400.0
+margin_bottom = 24.0
+text = "Vollbildmodus"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings"]
+margin_top = 480.0
+margin_right = 400.0
+margin_bottom = 500.0
+
+[node name="Back" type="Button" parent="Settings/HBoxContainer"]
+margin_right = 198.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Zurück"
+
+[node name="Save" type="Button" parent="Settings/HBoxContainer"]
+margin_left = 202.0
+margin_right = 400.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Speichern"
+[connection signal="pressed" from="Main/Spiel Laden" to="." method="_on_Main_Spiel_Laden_pressed"]
+[connection signal="pressed" from="Main/Einstellungen" to="." method="_on_Main_Einstellungen_pressed"]
+[connection signal="pressed" from="Main/SpielBeenden" to="." method="_on_Main_SpielBeenden_pressed"]
+[connection signal="pressed" from="Load/HBoxContainer/Back" to="." method="_on_Load_Back_pressed"]
+[connection signal="pressed" from="Settings/HBoxContainer/Back" to="." method="_on_Settings_Back_pressed"]
+[connection signal="pressed" from="Settings/HBoxContainer/Save" to="." method="_on_Settings_Save_pressed"]
