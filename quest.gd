@@ -6,12 +6,12 @@ extends Node
 # var b = "text"
 export (int) var reputationBonus
 export (int) var revenue
-export (int) var mode # nur von 0-2
+export (int) var mode # nur von 0, oder 1
 export (NodePath) var referencedNPC #node ## Nicht zwingend das Eltern Node!!!
 export var objectSpawners = [] # node
-export (NodePath) var itemAtBeginning = null
-export (NodePath) var assigned_item = null
-export (NodePath) var itemAtEnd = null
+export (NodePath) var itemAtBeginning = null # Dieses Item bekommt der Spieler zu Beginn der Quest
+export (NodePath) var assigned_item = null # Item muss beschaffen werden, um Quest abzuschließen
+export (NodePath) var itemAtEnd = null # Player bekommt nach abschließen der Quest dieses Item
 export (int) var amount_of_delay # wann man eine quest wiederholen kann
 export (int) var timeLimit = 1 ## Anzahl in Tagen. 1 bedeutet: Die Aufgabe muss noch am selben Tag erledigt werden
 export (int) var quest_day
@@ -48,7 +48,7 @@ func can_do_quest():
 	pass
 
 func is_quest_done():
-	if mode  == 0: # 0: Item Sammeln/kaufen, bringen
+	if mode  == 0: # 0: Item Sammeln/kaufen, (jemandem anderen) bringen
 		if player.has_in_inventory(get_node(assigned_item)):
 			return true
 		return false
@@ -57,11 +57,6 @@ func is_quest_done():
 			if !get_node(object).is_spawner_empty():
 				return false
 		return true
-#	if mode == 2: # 2: Item jemand anderem Bringen
-#		if player.has_in_inventory(get_node(assigned_item)):
-#			return true
-#		return false
-#	pass
 
 func initiate():
 	print("initiating quest...")

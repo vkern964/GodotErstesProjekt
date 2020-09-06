@@ -4,7 +4,7 @@ extends Spatial
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export (float) var wahrscheinlichkeit
+export (float) var wahrscheinlichkeit # Wahscheinlichkeit beim spawnen täglich
 export (NodePath) var itemPath
 var child_object
 
@@ -53,5 +53,9 @@ func is_spawner_empty():
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+var oldday = 100000
+func _process(delta):
+	if world.day > oldday:
+		daily_spawn()
+	oldday = world.day
+		

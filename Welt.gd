@@ -1,15 +1,8 @@
 extends Spatial
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
 
 var day = 1
 var hour = 6
@@ -27,3 +20,11 @@ func _process(delta):
 			minute = 0
 			hour += 1
 		timetimer -= timetimeduration 
+		
+func next_day():
+	day += 1
+	hour = 6
+	minute = 0
+	print("New Day: " + String(day));
+
+

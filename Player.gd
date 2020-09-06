@@ -153,6 +153,9 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("pick_item"):
 		do_action()
+	
+	if Input.is_action_just_pressed("sleep"):
+		world.next_day()
 
 
 func display_message(string):
@@ -239,13 +242,20 @@ func talk_to_NPC():  ## Hier wird die Quest gehändelt
 func _on_AskQuest_pressed():
 	var quest = currentNPC.get_node("Quest")
 	$HUD/Message.hide()
+	if quest == null:
+		print("NO QUEST AT " + currentNPC.name + " found!")
+		$HUD._on_Ok_pressed()
+		return	
 	if quest.can_do_quest() == 0:
 		display_quest_offer(quest.questOffer)
 	elif quest.can_do_quest() == 1:
 		display_message(quest.questNotAtThisDay)
 
 func new_quest():
-	active_quests.append(currentNPC.get_node("Quest"))
+	var quest = currentNPC.get_node("Quest")
+	if quest.itemAtBeginning != null:
+		put_to_inventory(quest.get_node(quest.itemAtBeginning))
+	active_quests.append(quest)
 
 func check_active_quest_at_current_npc():
 	for quest in active_quests:
@@ -257,9 +267,9 @@ func check_active_quest_at_current_npc():
 		
 func check_at_npc_for_recieving_item_from_quest():
 	for quest in active_quests:
-		if quest.referencedNPC != currentNPC.name:
+		if quest.get_node(quest.referencedNPC).name == currentNPC.name:
 			print("Bei diesen NPC kann man Items abgeben")
-			if has_in_inventory(quest.requiredItems):
+			if has_in_inventory(quest.get_node(quest.assigned_item)):
 				print("Es sind auch alle Items dafür da")
 				return true
 	return false
