@@ -37,6 +37,8 @@ func update_HUD():
 		$PressE.visible = true
 	else:
 		$PressE.visible = false
+		
+	update_quests()
 
 func display_message(message):
 	$Message/RichTextLabel.text = message
@@ -98,5 +100,18 @@ func update_inventory():
 		images[index].get_node("Label").text = ""
 		index += 1
 
-func update_quest():
-	pass
+func update_quests():
+	if player.active_quests.size() == 0:
+		$Quests/VBoxContainer/ActiveQuests.text = ""
+		return
+	var string = "Aktive Aufgaben:"
+	for quest in player.active_quests:
+		string += "\n" + quest.shortDescription + " für  " + quest.get_node(quest.referencedNPC).name + ". "
+		var daysToDo = quest.quest_day + quest.timeLimit - quest.world.day
+		if daysToDo == 0:
+			string += "(Bis heute)"
+		elif daysToDo == 1:
+			string += "(Bis morgen)"
+		else:
+			string += "(Bis in " + String(daysToDo) + " Tagen)"
+	$Quests/VBoxContainer/ActiveQuests.text = string

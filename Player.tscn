@@ -61,11 +61,17 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 2 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 2, 2.1, 5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "setPlayerToSleepPosition"
+}, {
+"args": [  ],
+"method": "next_day"
+}, {
+"args": [  ],
+"method": "check_all_current_quests"
 } ]
 }
 
@@ -480,45 +486,11 @@ margin_right = 322.0
 margin_bottom = 186.0
 alignment = 2
 
-[node name="Label" type="Label" parent="HUD/Quests/VBoxContainer"]
-margin_top = 82.0
-margin_right = 322.0
-margin_bottom = 96.0
-text = "Active Quests:"
-
-[node name="GridContainer" type="GridContainer" parent="HUD/Quests/VBoxContainer"]
-margin_top = 100.0
+[node name="ActiveQuests" type="Label" parent="HUD/Quests/VBoxContainer"]
+margin_top = 172.0
 margin_right = 322.0
 margin_bottom = 186.0
-
-[node name="Label" type="Label" parent="HUD/Quests/VBoxContainer/GridContainer"]
-margin_right = 282.0
-margin_bottom = 14.0
-text = "Quest 1: export (String) var shortDescription"
-
-[node name="Label3" type="Label" parent="HUD/Quests/VBoxContainer/GridContainer"]
-margin_top = 18.0
-margin_right = 282.0
-margin_bottom = 32.0
-text = "Quest 1: export (String) var shortDescription"
-
-[node name="Label4" type="Label" parent="HUD/Quests/VBoxContainer/GridContainer"]
-margin_top = 36.0
-margin_right = 282.0
-margin_bottom = 50.0
-text = "Quest 1: export (String) var shortDescription"
-
-[node name="Label5" type="Label" parent="HUD/Quests/VBoxContainer/GridContainer"]
-margin_top = 54.0
-margin_right = 282.0
-margin_bottom = 68.0
-text = "Quest 1: export (String) var shortDescription"
-
-[node name="Label6" type="Label" parent="HUD/Quests/VBoxContainer/GridContainer"]
-margin_top = 72.0
-margin_right = 282.0
-margin_bottom = 86.0
-text = "Quest 1: export (String) var shortDescription"
+text = "Active Quests:"
 
 [node name="CollisionDetection" type="Area" parent="."]
 

@@ -155,7 +155,7 @@ func _process(delta):
 		do_action()
 	
 	if Input.is_action_just_pressed("sleep"):
-		world.next_day()
+		sleep()
 
 
 func display_message(string):
@@ -188,7 +188,6 @@ func _on_CollisionDetection_area_exited(area):
 
 func pick_item():
 	if currentItem == null: 
-		sleep()
 		return
 	if has_inventory_space(currentItem):
 		put_to_inventory(currentItem)
@@ -202,6 +201,18 @@ func pick_item():
 func sleep():
 	$HUD/AnimationPlayer.play("sleep")
 	
+	
+func next_day():
+	
+	world.next_day()
+	
+func check_all_current_quests():
+	for quest in active_quests:
+		print(quest.shortDescription)
+		if not quest.check_daily(): # Wenn die Quest überfällig ist:
+			active_quests.erase(quest)
+			
+
 func setPlayerToSleepPosition():
 	self.transform = startTransform
 
@@ -229,11 +240,12 @@ func talk_to_NPC():  ## Hier wird die Quest gehändelt
 			return
 		else:
 			if not check_at_npc_for_recieving_item_from_quest():
-				display_message(quest.questNotRequiredItems)
-			display_message("Du hast deine Aufgabe noch nicht erledigt, spreche mit mir, wenn Du meine Aufgabe erledigt hast!")
+				display_message(quest.questNotFinished)
+			else:
+				display_message("Du hast deine Aufgabe noch nicht erledigt, spreche mit mir, wenn Du meine Aufgabe erledigt hast!")
 			return
 	if reputation < currentNPC.reputationBarrier:
-		display_message(currentNPC.sentenceNotEnoughReputation)
+		display_message(currentNPC.sentenceNotEnouhReputation)
 	else:
 		var index = int(rand_range(0,currentNPC.standartSentences.size()))
 		display_npc_message(currentNPC.standartSentences[index])
@@ -246,10 +258,9 @@ func _on_AskQuest_pressed():
 		print("NO QUEST AT " + currentNPC.name + " found!")
 		$HUD._on_Ok_pressed()
 		return	
-	if quest.can_do_quest() == 0:
-		display_quest_offer(quest.questOffer)
-	elif quest.can_do_quest() == 1:
-		display_message(quest.questNotAtThisDay)
+	quest.can_do_quest()
+
+
 
 func new_quest():
 	var quest = currentNPC.get_node("Quest")
@@ -267,7 +278,7 @@ func check_active_quest_at_current_npc():
 		
 func check_at_npc_for_recieving_item_from_quest():
 	for quest in active_quests:
-		if quest.get_node(quest.referencedNPC).name == currentNPC.name:
+		if quest.get_node(quest.referencedNPC).name == currentNPC.name and quest.assigned_item != null:
 			print("Bei diesen NPC kann man Items abgeben")
 			if has_in_inventory(quest.get_node(quest.assigned_item)):
 				print("Es sind auch alle Items dafür da")

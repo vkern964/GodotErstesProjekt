@@ -44,25 +44,25 @@ gravity_scl = 1.1
 [node name="Karl" parent="NPCs" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.18061, 0.443452, -1.37815 )
 standartSentences = [ "Hihi", "TestTest" ]
-reputationBarrier = 40
 
 [node name="Quest" parent="NPCs/Karl" instance=ExtResource( 5 )]
 reputationBonus = 10
 revenue = 100
-referencedNPC = NodePath("../../Richard")
+mode = 1
+referencedNPC = NodePath("..")
 objectSpawners = [ NodePath("../../Richard/SpawnerMüll1") ]
-assigned_item = NodePath("../../../Items/Müll")
+shortDescription = "Dreck wegmachen"
 sentenceNotEnoughReputation = "Ich mag dich nicht! Du hast nicht genug Ansehen."
 questOffer = "Mach den Dreck weg du Dreck"
 questAcceptMessage = "Ja dann los an die Arbeit!"
 questCancelMessage = "Ja dann mach ichs halt selber Du Idiot"
-questNotAtThisDay = "Gibt kein Dreck"
+questNotAtThisDay = "Gibt kein Dreck, frage mich an einem anderen Tag!"
 questDone = "Klasse, alles ist wieder sauber Du Depp."
+questNotFinished = "Noch nicht sauber!"
 
 [node name="Richard" parent="NPCs" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0671048, 0.443452, -8.5735 )
 standartSentences = [ "Hihi", "TestTest" ]
-reputationBarrier = 40
 
 [node name="SpawnerMüll1" parent="NPCs/Richard" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.18061, -0.275868, 1.37815 )
@@ -74,7 +74,7 @@ itemPath = NodePath("../../../Items/Müll")
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0 )
 
 [node name="Müll" parent="Items" instance=ExtResource( 2 )]
-amount = 1
+amount = 0
 description = "Müll"
 id = 1
 iconpath = "res://GodotErstesProjekt/Ressources/Textures/dummy_item.png"
