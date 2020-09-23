@@ -20,6 +20,8 @@ func _on_Main_Spiel_Laden_pressed():
 	$Main.hide()
 	$Background.show()
 	$Label.hide()
+	SaveManager.update_item_list($Load/ItemList)
+
 
 func _on_Main_Einstellungen_pressed():
 	$Settings.show()
@@ -50,3 +52,8 @@ func _on_Settings_Save_pressed():
 	update_settings()
 	
 
+
+
+
+func _on_Load_pressed():
+	SaveManager.select_file_from_ItemList($Load/ItemList)

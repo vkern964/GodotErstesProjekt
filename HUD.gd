@@ -115,3 +115,39 @@ func update_quests():
 		else:
 			string += "(Bis in " + String(daysToDo) + " Tagen)"
 	$Quests/VBoxContainer/ActiveQuests.text = string
+	
+	
+func _process(delta):
+	if Input.is_action_just_pressed("Escape") and not $Pause.visible:
+		get_tree().paused = true
+		$Pause.show()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	elif Input.is_action_just_pressed("Escape") and $Pause.visible:
+		get_tree().paused = false
+		$Pause.hide()
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		
+		
+		
+
+
+func _on_PauseResume_pressed():
+	get_tree().paused = false
+	$Pause.hide()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+
+
+
+func _on_PauseQuit_pressed():
+	get_tree().quit()
+
+
+func _on_PauseSave_pressed():
+	$Pause/Pause.hide()
+	$Pause/Save.show()
+
+
+func _on_PauseSaveCancel_pressed():
+	$Pause/Save.hide()
+	$Pause/Pause.show()

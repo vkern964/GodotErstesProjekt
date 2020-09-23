@@ -285,7 +285,7 @@ func check_at_npc_for_recieving_item_from_quest():
 				return true
 	return false
 
-## TODO
-## Wie geht es Weiter? 
-# Quest system checken, wenn man einem anderen npc was bringen soll
+
+
+
 

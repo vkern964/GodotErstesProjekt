@@ -159,5 +159,6 @@ text = "Speichern"
 [connection signal="pressed" from="Main/Einstellungen" to="." method="_on_Main_Einstellungen_pressed"]
 [connection signal="pressed" from="Main/SpielBeenden" to="." method="_on_Main_SpielBeenden_pressed"]
 [connection signal="pressed" from="Load/HBoxContainer/Back" to="." method="_on_Load_Back_pressed"]
+[connection signal="pressed" from="Load/HBoxContainer/Load" to="." method="_on_Load_pressed"]
 [connection signal="pressed" from="Settings/HBoxContainer/Back" to="." method="_on_Settings_Back_pressed"]
 [connection signal="pressed" from="Settings/HBoxContainer/Save" to="." method="_on_Settings_Save_pressed"]
